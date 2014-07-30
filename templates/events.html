@@ -1,0 +1,27 @@
+{% for event in events.iteritems() %}
+    {% set type = event[0] %}
+    {% set image = event[1].pop('image', '') %}
+    {% set href = event[1].pop('href', '#') %}
+    {% set title = event[1].pop('message', '') %}
+    {% set caption = event[1].pop('caption', '') %}
+
+    
+    <div data-type="{{ type }}" title="{{ title }}"
+            {% for data in event[1].iteritems() %}
+{#                {% if type_func(data[1]) != list  %}#}
+                    data-{{ data[0] }}="{{ data[1] }}"
+{#                {% end %}#}
+            {% end %}>
+        <a href="{{ href }}" class="nav">
+            <div class="image">
+                <img src="/theme/OneFrame/img/events/{{ image }}" alt=""/>
+            </div>
+            {% if caption == 'title'%}
+                <div class="title">{{ title }}</div>
+            {% elif caption == 'time' %}
+                <div class="title timer" data-timer="{{ event[1].get('time')-now() }}'.($gameEvent['time'] - time()).'">00:00:00</div>
+            {% end %}
+        </a>
+        <img src="/theme/OneFrame/img/x1.png" class="close" alt="" />
+    </div>
+{% end %}
